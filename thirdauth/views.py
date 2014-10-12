@@ -1,12 +1,16 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
+from thirdauth.models import Profile
 
 
 def home(request):
 
-    user = request.user
-    print("email:%s" % (user.email))
-    print("name:%s" % (user.get_full_name()))
+    if request.user != None:
+        user = request.user
+        if user.is_active == True:
+            # profile = Profile.objects.get(user=user)
+            profile = user.profile
+            print("image:%s" % (profile.profile_image_url))
 
     context = RequestContext(request,
                            {'request':request,
